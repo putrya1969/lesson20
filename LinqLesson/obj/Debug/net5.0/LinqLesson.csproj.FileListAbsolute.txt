@@ -1,0 +1,17 @@
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\LinqLesson.exe
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\data.json
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\LinqLesson.deps.json
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\LinqLesson.runtimeconfig.json
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\LinqLesson.runtimeconfig.dev.json
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\LinqLesson.dll
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\ref\LinqLesson.dll
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\bin\Debug\net5.0\LinqLesson.pdb
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.csprojAssemblyReference.cache
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.AssemblyInfoInputs.cache
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.AssemblyInfo.cs
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.csproj.CoreCompileInputs.cache
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.dll
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\ref\LinqLesson.dll
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.pdb
+C:\Users\D.Putrya\source\repos\LinqLesson\LinqLesson\obj\Debug\net5.0\LinqLesson.genruntimeconfig.cache
