@@ -1,20 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System;
-using System.Diagnostics;
-using System.Linq;
 
 namespace LinqLesson
 {
     class Program
     {
-
-            /*find out who is located farthest north/south/west/east using latitude/longitude data
-              find max and min distance between 2 persons
-              find 2 persons whos ‘about’ have the most same words
-              find persons with same friends (compare by friend’s name)*/
         static void Main(string[] args)
         {
             IEnumerable<Person> persons = new List<Person>();
@@ -26,26 +21,54 @@ namespace LinqLesson
             using (StreamReader streamReader = new StreamReader("data.json"))
             {
                 var content = streamReader.ReadToEnd();
-                persons = JsonSerializer.Deserialize<IEnumerable<Person>>(content,options);
+                persons = JsonSerializer.Deserialize<IEnumerable<Person>>(content, options);
             }
+            
             //find out who is located farthest north / south / west / east using latitude/ longitude data
             var farthestNorth = persons.Where(p => p.Latitude == persons.Max(p => p.Latitude)).FirstOrDefault();
             var farthestSouth = persons.Where(p => p.Latitude == persons.Min(p => p.Latitude)).FirstOrDefault();
             var farthestWest = persons.Where(p => p.Longitude == persons.Max(p => p.Longitude)).FirstOrDefault();
             var farthestEast = persons.Where(p => p.Longitude == persons.Min(p => p.Longitude)).FirstOrDefault();
+            
             //find max and min distance between 2 persons
-
-
+            var pairWirhMaxDist = persons.SelectMany(p1 => persons.Select(p2 => new { Person1 = p1, Person2 = p2 }))
+                .Where(p => p.Person1 != p.Person2)
+                .Select(d => new PairWithDistance(d.Person1, d.Person2, (GetDistanceInMiles(d.Person1, d.Person2))))
+                .OrderByDescending(d => d.Distance)
+                .FirstOrDefault()
+                .ToString();
+            Console.WriteLine($"Maximum distance between\n{pairWirhMaxDist}");
+            var pairWirhMinDist = persons.SelectMany(p1 => persons.Select(p2 => new { Person1 = p1, Person2 = p2 }))
+                .Where(p => p.Person1 != p.Person2)
+                .Select(d => new PairWithDistance(d.Person1, d.Person2, (GetDistanceInMiles(d.Person1, d.Person2))))
+                .OrderBy(d => d.Distance)
+                .FirstOrDefault()
+                .ToString();
+            Console.WriteLine($"Minimum distance between\n{pairWirhMinDist}");
+            
             //find 2 persons whos ‘about’ have the most same words
             var twoPersonWithLongestAbout = persons.OrderByDescending(p => p.About.WordsCount()).Take(2);
 
             //find persons with same friends(compare by friend’s name)
-            var listFriends = persons.SelectMany(p => p.Friends).ToList();
+            var grooupByFriends = persons
+                .SelectMany(person => person.Friends, (person, friend) => new { FriendName = friend.Name, PersonName = person.Name })
+                .GroupBy(pf => pf.FriendName)
+                .Where(pf => pf.Count() > 1)
+                .ToList();
+            foreach (var commonFriend in grooupByFriends)
+            {
+                Console.WriteLine($"{commonFriend.Key} is common friend for:");
+                foreach (var person in commonFriend)
+                {
+                    Console.WriteLine(person.PersonName);
+                }
+                Console.WriteLine();
+            }
         }
 
-        private double GetDistanceInMiles(double lat1, double long1, double lat2, double long2)
+        public static double GetDistanceInMiles(Person person1, Person person2)
         {
-            return 3963.0 * Math.Acos((Math.Sin(lat1) * Math.Sin(lat2)) + Math.Cos(lat1) * Math.Cos(lat2) * Math.Cos(long2-long1));
+            return 3963.0 * Math.Acos((Math.Sin(person1.Latitude) * Math.Sin(person2.Latitude)) + Math.Cos(person1.Latitude) * Math.Cos(person2.Latitude) * Math.Cos(person2.Longitude - person1.Longitude));
         }
     }
 
@@ -82,18 +105,5 @@ namespace LinqLesson
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         => writer.WriteStringValue(value.ToUniversalTime().ToString(_format));
-    }
-
-    class MyClass : JsonConverter<DateTimeOffset>
-    {
-        public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
