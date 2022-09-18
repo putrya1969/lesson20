@@ -107,3 +107,4 @@ namespace LinqLesson
         => writer.WriteStringValue(value.ToUniversalTime().ToString(_format));
     }
 }
+//checked
